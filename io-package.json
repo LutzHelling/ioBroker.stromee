@@ -1,0 +1,92 @@
+{
+	"common": {
+		"name": "stromee",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"uk": "Початкова версія",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Stromee+",
+		"titleLang": {
+			"en": "Stromee+",
+			"de": "Stromee+",
+			"ru": "Строми+",
+			"pt": "Stromee+",
+			"nl": "Stromee+",
+			"fr": "Stromée+",
+			"it": "Strome+",
+			"es": "Stromee+",
+			"pl": "Stromee+",
+			"uk": "Stromee+",
+			"zh-cn": "河滨+"
+		},
+		"desc": {
+			"en": "stromee",
+			"de": "stromee",
+			"ru": "Строми",
+			"pt": "stromee",
+			"nl": "stromee",
+			"fr": "stromée",
+			"it": "stromee",
+			"es": "stromee",
+			"pl": "strome",
+			"uk": "stromee",
+			"zh-cn": "溪流"
+		},
+		"authors": [
+			"JavaTheHut <lutz@helling-online.com>"
+		],
+		"keywords": [
+			"ioBroker",
+			"template",
+			"Smart Home",
+			"home automation"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "Stromee_Logo.jpg",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/LutzHelling/ioBroker.stromee/main/admin/stromee.png",
+		"readme": "https://github.com/LutzHelling/ioBroker.stromee/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "energy",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {
+		"deviceId": "",
+		"deviceName": "",
+		"user": "",
+		"password": "",
+		"updateFreq": 5
+	},
+	"objects": [],
+	"instanceObjects": []
+}

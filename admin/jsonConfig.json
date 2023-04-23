@@ -1,0 +1,31 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"deviceName": {
+			"type": "text",
+			"label": "deviceName",
+			"newLine": true
+		},
+		"deviceId": {
+			"type": "text",
+			"label": "deviceId",
+			"newLine": true
+		},
+		"user": {
+			"type": "text",
+			"label": "user",
+			"newLine": true
+		},
+		"password": {
+			"type": "password",
+			"label": "password",
+			"newLine": true
+		},
+		"updateFreq": {
+			"type": "number",
+			"label": "updateFrequencyInSecs",
+			"newLine": true
+		}
+	}
+}

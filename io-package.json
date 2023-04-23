@@ -48,9 +48,7 @@
 			"JavaTheHut <lutz@helling-online.com>"
 		],
 		"keywords": [
-			"Stromee",
-			"Smart Home",
-			"home automation"
+			"Stromee"
 		],
 		"license": "MIT",
 		"platform": "Javascript/Node.js",

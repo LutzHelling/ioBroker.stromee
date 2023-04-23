@@ -164,7 +164,7 @@ class Stromee extends utils.Adapter {
   }
   onUnload(callback) {
     try {
-      this.clearTimeout(this.t1);
+      clearInterval(this.t1);
       callback();
     } catch (e) {
       callback();

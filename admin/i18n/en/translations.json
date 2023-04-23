@@ -1,5 +1,8 @@
 {
 	"stromee adapter settings": "Adapter settings for stromee",
-	"option1": "option1",
-	"option2": "option2"
+	"deviceName": "Device name",
+	"deviceId": "Device ID",
+	"user": "User",
+	"password": "Password",
+	"updateFreq": "Update frequency"
 }

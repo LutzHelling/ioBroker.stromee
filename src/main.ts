@@ -11,7 +11,8 @@ import { request } from "node:https";
 class Stromee extends utils.Adapter {
 
 	private t1!: any;
-	private token: any = {};
+	private auth: any = {};
+	private token = "";
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -58,10 +59,10 @@ class Stromee extends utils.Adapter {
 		this.log.info("Getting data from Stromee+-Cloud...");
 		if (this.isTokenInvalid()) {
 			this.getToken((response: Buffer) => {
-				const auth = JSON.parse(response.toString());
-				const token = auth.authentication.authenticationToken;
+				this.auth = JSON.parse(response.toString());
+				this.token = this.auth.authentication.authenticationToken;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				this.getStaende(token, (response: Buffer) => {
+				this.getStaende(this.token, (response: Buffer) => {
 					const measurements = JSON.parse(response.toString());
 					measurements.forEach((e: any) => {
 						this.log.debug(JSON.stringify(e));
@@ -74,7 +75,7 @@ class Stromee extends utils.Adapter {
 				});
 			});
 		} else {
-			this.getStaende(this.token.authentication.authenticationToken, (response: Buffer) => {
+			this.getStaende(this.token, (response: Buffer) => {
 				const measurements = JSON.parse(response.toString());
 				measurements.forEach((e: any) => {
 					this.log.debug(JSON.stringify(e));
@@ -90,13 +91,14 @@ class Stromee extends utils.Adapter {
 	}
 
 	private isTokenInvalid(): boolean {
-		if (!this.token.hasOwnProperty("authentication")) {
+		this.log.info("hasOwnProperty:" + this.auth.hasOwnProperty("authentication"));
+		if (!this.auth.hasOwnProperty("authentication")) {
 			return true;
 		}
-		this.log.debug("token is valid..." + JSON.stringify(this.token));
-		const maxAgeInt = Number(this.token.authentication.expiresAt);
-		this.log.debug("maxAge:" + new Date(maxAgeInt).toLocaleString());
-		return !(maxAgeInt < (new Date().getTime() - 1000));
+		this.log.info("token is valid..." + JSON.stringify(this.auth));
+		const maxAgeInt = Number(this.auth.authentication.expiresAt) * 1000;
+		this.log.info("maxAge:" + new Date(maxAgeInt).toLocaleString());
+		return !(maxAgeInt < (new Date().getTime()));
 	}
 
 	private getStaende(token: any, callback: (buf: Buffer) => void): void {
@@ -170,6 +172,7 @@ class Stromee extends utils.Adapter {
 
 			const postData = JSON.stringify({
 				"username": this.config.user,
+				"email": this.config.user,
 				"password": this.config.password,
 				"skipPowercloud": true
 			});

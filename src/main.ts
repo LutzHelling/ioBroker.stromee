@@ -32,11 +32,11 @@ class Stromee extends utils.Adapter {
 	private async onReady(): Promise<void> {
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.info("config deviceId: " + this.config.deviceId);
-		this.log.info("config deviceName: " + this.config.deviceName);
-		this.log.info("config user: " + this.config.user);
-		this.log.info("config password: " + this.config.password);
-		this.log.info("config updateFreq: " + this.config.updateFreq);
+		this.log.debug("config deviceId: " + this.config.deviceId);
+		this.log.debug("config deviceName: " + this.config.deviceName);
+		this.log.debug("config user: " + this.config.user);
+		this.log.debug("config password: " + this.config.password);
+		this.log.debug("config updateFreq: " + this.config.updateFreq);
 
 		await this.setObjectNotExistsAsync("letzterStand", {
 			type: "state",
@@ -91,14 +91,17 @@ class Stromee extends utils.Adapter {
 	}
 
 	private isTokenInvalid(): boolean {
-		this.log.info("hasOwnProperty:" + this.auth.hasOwnProperty("authentication"));
 		if (!this.auth.hasOwnProperty("authentication")) {
 			return true;
 		}
-		this.log.info("token is valid..." + JSON.stringify(this.auth));
-		const maxAgeInt = Number(this.auth.authentication.expiresAt) * 1000;
-		this.log.info("maxAge:" + new Date(maxAgeInt).toLocaleString());
-		return !(maxAgeInt < (new Date().getTime()));
+		this.log.debug("token already gained..." + JSON.stringify(this.auth));
+		const maxAgeInt = Number(this.auth.authentication.expiresAt);
+		this.log.debug("maxAge:" + maxAgeInt);
+		this.log.debug("now:" + (new Date().getTime()))
+		this.log.debug("limit:" + (new Date().getTime() + 1000))
+		const ret = !(maxAgeInt < (new Date().getTime() + 1000));
+		this.log.debug("token is valid:" + !ret);
+		return ret;
 	}
 
 	private getStaende(token: any, callback: (buf: Buffer) => void): void {
@@ -124,12 +127,12 @@ class Stromee extends utils.Adapter {
 
 			res.on("end", function () {
 				const body = Buffer.concat(chunks);
-				_self.log.info(body.toString());
+				_self.log.debug(body.toString());
 				callback(body);
 			});
 
 			res.on("error", function (error) {
-				_self.log.info(error.message);
+				_self.log.debug(error.message);
 			});
 		});
 
@@ -161,7 +164,7 @@ class Stromee extends utils.Adapter {
 
 				res.on("end", function () {
 					const body = Buffer.concat(chunks);
-					_self.log.info(body.toString());
+					_self.log.debug(body.toString());
 					callback(body);
 				});
 
@@ -189,7 +192,7 @@ class Stromee extends utils.Adapter {
 	 */
 	private onUnload(callback: () => void): void {
 		try {
-			this.clearTimeout(this.t1);
+			this.clearInterval(this.t1);
 			callback();
 		} catch (e) {
 			callback();

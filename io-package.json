@@ -48,8 +48,7 @@
 			"JavaTheHut <lutz@helling-online.com>"
 		],
 		"keywords": [
-			"ioBroker",
-			"template",
+			"Stromee",
 			"Smart Home",
 			"home automation"
 		],
@@ -58,7 +57,7 @@
 		"main": "build/main.js",
 		"icon": "Stromee_Logo.jpg",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/LutzHelling/ioBroker.stromee/main/admin/stromee.png",
+		"extIcon": "https://raw.githubusercontent.com/LutzHelling/ioBroker.stromee/main/admin/Stromee_Logo.jpg",
 		"readme": "https://github.com/LutzHelling/ioBroker.stromee/blob/main/README.md",
 		"loglevel": "info",
 		"mode": "daemon",

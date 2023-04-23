@@ -9,8 +9,6 @@
 
 [![NPM](https://nodei.co/npm/iobroker.Stromee_Logo.jpg?downloads=true)](https://nodei.co/npm/iobroker.stromee/)
 
-**Tests:** ![Test and Release](https://github.com/LutzHelling/ioBroker.stromee/workflows/Test%20and%20Release/badge.svg)
-
 ## Stromee+ adapter for ioBroker
 
 Retrieve values from Stromee+ cloud in recurring interval.
@@ -19,16 +17,7 @@ Retrieve values from Stromee+ cloud in recurring interval.
 
 ### 0.0.1
 
-- initial working version
-
-<!--
-	Placeholder for the next version (at the beginning of the line):
-	### **WORK IN PROGRESS**
--->
-
-### **WORK IN PROGRESS**
-
-- (JavaTheHut) initial release
+- (JavaTheHut) initial working version
 
 ## License
 

@@ -60,6 +60,10 @@ class Stromee extends utils.Adapter {
 		if (this.isTokenInvalid()) {
 			this.getToken((response: Buffer) => {
 				this.auth = JSON.parse(response.toString());
+				if (this.isTokenInvalid()) {
+					this.log.info("Token could not be gained from Stromee+");
+					return;
+				}
 				this.token = this.auth.authentication.authenticationToken;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				this.getStaende(this.token, (response: Buffer) => {

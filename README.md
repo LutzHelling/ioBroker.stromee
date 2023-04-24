@@ -13,6 +13,11 @@
 
 Retrieve values from Stromee+ cloud in recurring interval.
 
+### Setup
+User and password are given by Stromee. Please enter them exactly without leading or trailing blanks.
+
+
+
 ## Changelog
 
 ### 0.0.1

@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "stromee",
-		"version": "0.0.2 alpha1",
+		"version": "0.0.2 alpha2",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -16,7 +16,7 @@
 				"uk": "Початкова версія",
 				"zh-cn": "首次出版"
 			},
-			"0.0.2-alpha1": {
+			"0.0.2-alpha2": {
 				"en": "description added",
 				"de": "Beschreibungen ergänzt"
 			}

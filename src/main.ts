@@ -58,6 +58,7 @@ class Stromee extends utils.Adapter {
 	private doIt = (): void => {
 		this.log.info("Getting data from Stromee+-Cloud...");
 		if (this.isTokenInvalid()) {
+			this.log.info("Token is invalid, new token needed...")
 			this.getToken((response: Buffer) => {
 				this.auth = JSON.parse(response.toString());
 				if (this.isTokenInvalid()) {
@@ -98,7 +99,7 @@ class Stromee extends utils.Adapter {
 		if (!this.auth.hasOwnProperty("authentication")) {
 			return true;
 		}
-		this.log.debug("token already gained..." + JSON.stringify(this.auth));
+		this.log.debug("Token already gained..." + JSON.stringify(this.auth));
 		const maxAgeInt = Number(this.auth.authentication.expiresAt);
 		this.log.debug("maxAge:" + maxAgeInt);
 		this.log.debug("now:" + (new Date().getTime()))

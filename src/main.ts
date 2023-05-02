@@ -50,6 +50,8 @@ class Stromee extends utils.Adapter {
 			native: {},
 		});
 
+		this.doIt();
+
 		this.t1 = this.setInterval(() => {
 			this.doIt();
 		}, this.config.updateFreq * 1000);
@@ -69,12 +71,15 @@ class Stromee extends utils.Adapter {
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				this.getStaende(this.token, (response: Buffer) => {
 					const measurements = JSON.parse(response.toString());
-					measurements.forEach((e: any) => {
+					measurements.forEach(async (e: any) => {
 						this.log.debug(JSON.stringify(e));
 						if (e.measurement == this.config.deviceId) {
 							const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
 							this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
-							this.setState("letzterStand", Number(e.value));
+							await this.setState("letzterStand", Number(e.value), true, (err) => {
+								// analyse if the state could be set (because of permissions)
+								if (err) this.log.error(err.toString());
+							});
 						}
 					});
 				});
@@ -82,12 +87,12 @@ class Stromee extends utils.Adapter {
 		} else {
 			this.getStaende(this.token, (response: Buffer) => {
 				const measurements = JSON.parse(response.toString());
-				measurements.forEach((e: any) => {
+				measurements.forEach(async (e: any) => {
 					this.log.debug(JSON.stringify(e));
 					if (e.measurement == this.config.deviceName) {
 						const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
 						this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
-						this.setState("letzterStand", Number(e.value));
+						await this.setStateAsync("letzterStand", Number(e.value));
 					}
 				});
 			});

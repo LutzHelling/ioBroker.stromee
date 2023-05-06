@@ -71,8 +71,10 @@ class Stromee extends utils.Adapter {
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				this.getStaende(this.token, (response: Buffer) => {
 					const measurements = JSON.parse(response.toString());
+					this.log.debug("config-deviceId: #" + this.config.deviceId + "#");
 					measurements.forEach(async (e: any) => {
 						this.log.debug(JSON.stringify(e));
+						this.log.debug("is correct measurement:" + (e.measurement == this.config.deviceId));
 						if (e.measurement == this.config.deviceId) {
 							const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
 							this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);

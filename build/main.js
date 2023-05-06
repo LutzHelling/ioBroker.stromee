@@ -40,8 +40,10 @@ class Stromee extends utils.Adapter {
           this.token = this.auth.authentication.authenticationToken;
           this.getStaende(this.token, (response2) => {
             const measurements = JSON.parse(response2.toString());
+            this.log.debug("config-deviceId: #" + this.config.deviceId + "#");
             measurements.forEach(async (e) => {
               this.log.debug(JSON.stringify(e));
+              this.log.debug("is correct measurement:" + (e.measurement == this.config.deviceId));
               if (e.measurement == this.config.deviceId) {
                 const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
                 this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);

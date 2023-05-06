@@ -19,7 +19,7 @@ User and password are given by Stromee. Please enter them exactly without leadin
 
 ## Changelog
 
-### 0.0.2-alpha6
+### 0.0.2-alpha7
 
 - (JavaTheHut) description added
 

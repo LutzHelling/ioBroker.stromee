@@ -70,36 +70,32 @@ class Stromee extends utils.Adapter {
 				this.token = this.auth.authentication.authenticationToken;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				this.getStaende(this.token, (response: Buffer) => {
-					const measurements = JSON.parse(response.toString());
-					this.log.debug("config-deviceId: #" + this.config.deviceId + "#");
-					measurements.forEach(async (e: any) => {
-						this.log.debug(JSON.stringify(e));
-						this.log.debug("is correct measurement:" + (e.measurement == this.config.deviceId));
-						if (e.measurement == this.config.deviceId) {
-							const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
-							this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
-							await this.setState("letzterStand", Number(e.value), true, (err) => {
-								// analyse if the state could be set (because of permissions)
-								if (err) this.log.error(err.toString());
-							});
-						}
-					});
+					this.filterAndSetMeasurement(response);
 				});
 			});
 		} else {
 			this.getStaende(this.token, (response: Buffer) => {
-				const measurements = JSON.parse(response.toString());
-				measurements.forEach(async (e: any) => {
-					this.log.debug(JSON.stringify(e));
-					if (e.measurement == this.config.deviceName) {
-						const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
-						this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
-						await this.setStateAsync("letzterStand", Number(e.value));
-					}
-				});
+				this.filterAndSetMeasurement(response);
 			});
 
 		}
+	}
+
+	private filterAndSetMeasurement(response: Buffer): void {
+		const measurements = JSON.parse(response.toString());
+		this.log.debug("config-deviceId: #" + this.config.deviceId + "#");
+		measurements.forEach(async (e: any) => {
+			this.log.debug(JSON.stringify(e));
+			this.log.debug("is correct measurement:" + (e.measurement == this.config.deviceId));
+			if (e.measurement == this.config.deviceId) {
+				const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
+				this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
+				await this.setState("letzterStand", Number(e.value), true, (err) => {
+					// analyse if the state could be set (because of permissions)
+					if (err) this.log.error(err.toString());
+				});
+			}
+		});
 	}
 
 	private isTokenInvalid(): boolean {

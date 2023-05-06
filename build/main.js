@@ -39,33 +39,12 @@ class Stromee extends utils.Adapter {
           }
           this.token = this.auth.authentication.authenticationToken;
           this.getStaende(this.token, (response2) => {
-            const measurements = JSON.parse(response2.toString());
-            this.log.debug("config-deviceId: #" + this.config.deviceId + "#");
-            measurements.forEach(async (e) => {
-              this.log.debug(JSON.stringify(e));
-              this.log.debug("is correct measurement:" + (e.measurement == this.config.deviceId));
-              if (e.measurement == this.config.deviceId) {
-                const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
-                this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
-                await this.setState("letzterStand", Number(e.value), true, (err) => {
-                  if (err)
-                    this.log.error(err.toString());
-                });
-              }
-            });
+            this.filterAndSetMeasurement(response2);
           });
         });
       } else {
         this.getStaende(this.token, (response) => {
-          const measurements = JSON.parse(response.toString());
-          measurements.forEach(async (e) => {
-            this.log.debug(JSON.stringify(e));
-            if (e.measurement == this.config.deviceName) {
-              const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
-              this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
-              await this.setStateAsync("letzterStand", Number(e.value));
-            }
-          });
+          this.filterAndSetMeasurement(response);
         });
       }
     };
@@ -94,6 +73,22 @@ class Stromee extends utils.Adapter {
     this.t1 = this.setInterval(() => {
       this.doIt();
     }, this.config.updateFreq * 1e3);
+  }
+  filterAndSetMeasurement(response) {
+    const measurements = JSON.parse(response.toString());
+    this.log.debug("config-deviceId: #" + this.config.deviceId + "#");
+    measurements.forEach(async (e) => {
+      this.log.debug(JSON.stringify(e));
+      this.log.debug("is correct measurement:" + (e.measurement == this.config.deviceId));
+      if (e.measurement == this.config.deviceId) {
+        const tsKlartext = new Date(Number(e.timestamp)).toLocaleString();
+        this.log.debug("Letzter Stand:" + e.value + " - " + tsKlartext);
+        await this.setState("letzterStand", Number(e.value), true, (err) => {
+          if (err)
+            this.log.error(err.toString());
+        });
+      }
+    });
   }
   isTokenInvalid() {
     if (!this.auth.hasOwnProperty("authentication")) {

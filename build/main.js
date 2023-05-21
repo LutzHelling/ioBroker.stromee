@@ -44,7 +44,15 @@ class Stromee extends utils.Adapter {
         });
       } else {
         this.getStaende(this.token, (response) => {
-          this.filterAndSetMeasurement(response);
+          let measurements;
+          try {
+            measurements = JSON.parse(response.toString());
+          } catch (error) {
+            console.error("Nicht mit Stromee+ Cloud verbunden");
+            return;
+          }
+          if (measurements)
+            this.filterAndSetMeasurement(measurements);
         });
       }
     };
@@ -74,8 +82,7 @@ class Stromee extends utils.Adapter {
       this.doIt();
     }, this.config.updateFreq * 1e3);
   }
-  filterAndSetMeasurement(response) {
-    const measurements = JSON.parse(response.toString());
+  filterAndSetMeasurement(measurements) {
     this.log.debug("config-deviceId: #" + this.config.deviceId + "#");
     measurements.forEach(async (e) => {
       this.log.debug(JSON.stringify(e));
